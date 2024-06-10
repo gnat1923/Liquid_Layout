@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for post in posts %}
+    <!--<div>
+        <h1><a href="{{ url_for('posts', id=post.id) }}">{{ post.title }}</a></h1>
+        <p> Neighbourhood: {{ post.neighbourhood }} </p>
+        <p> Beer rating: {{ post.beer_rating }} </p>
+        <p> Smoking? {{ post.smoking }} </p>
+        <p> {{ post.body }} </p>
+        <hr>
+    </div>-->
+    <div class="container text-left custom-post">
+        <div class="row">
+          <div class="col">
+            <h1><a href="{{ url_for('posts', id=post.id) }}" class="a-custom">{{ post.title }}</a></h1><hr>
+          </div>
+          <div class="row">
+            <div class="column">
+                <p><b>Neighbourhood:</b> {{ post.neighbourhood }} </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column">
+                <p><b>Beer rating:</b> {{ post.beer_rating }} </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column">
+                <p><b>Smoking?</b> {{ post.smoking }} </p><hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column">
+                <p>{{ post.body[:100] }}{% if post.body|length > 100 %}...{% endif %}</p>
+            </div>
+          </div>
+        </div>
+      </div><br>
+{% endfor %}
+
+{% endblock %}

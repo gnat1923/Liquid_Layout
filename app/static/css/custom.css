@@ -1,0 +1,41 @@
+body {
+    background-color: #ddd2c4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.custom-post {
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    max-width: 50%;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+footer {
+    margin-top: auto;
+    border-top: 3px solid black;
+    background-color: #ece1d4;
+    padding: 10px;
+}
+
+.a-custom {
+    color: white; /* Default Bootstrap link color */
+    text-decoration: none; /* Remove underline */
+    
+}
+
+.a-custom:hover {
+    color: #ece1d4; /* Default Bootstrap link color */
+    text-decoration: underline; /* Remove underline */
+}
+
+.banner {
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px auto;
+}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Create Post</h1>
+    <!--<form action="" method="post">
+        {{form.hidden_tag()}}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title }}
+            {% for error in form.title.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            
+        </p>
+        <p>
+            {{ form.transit.label }}<br>
+            {{ form.transit }}
+            {% for error in form.transit.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.neighbourhood.label }}<br>
+            {{ form.neighbourhood }}
+            {% for error in form.neighbourhood.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.beer_rating.label }}<br>
+            {{ form.beer_rating }}
+            {% for error in form.beer_rating.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.guinness.label }}<br>
+            {{ form.guinness }}
+            {% for error in form.guinness.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.smoking.label }}<br>
+            {{ form.smoking }}
+            {% for error in form.smoking.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.music.label }}<br>
+            {{ form.music }}
+            {% for error in form.music.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.body.label }}<br>
+            {{ form.body }}
+            {% for error in form.body.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p> {{ form.submit() }} </p>
+        </form>-->
+        <form action="" method="post" class="container">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(class="form-control") }}
+                {% for error in form.title.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.transit.label(class="form-label") }}
+                {{ form.transit(class="form-control") }}
+                {% for error in form.transit.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.neighbourhood.label(class="form-label") }}
+                {{ form.neighbourhood(class="form-control") }}
+                {% for error in form.neighbourhood.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.beer_rating.label(class="form-label") }}
+                {{ form.beer_rating(class="form-control") }}
+                {% for error in form.beer_rating.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.guinness.label(class="form-label") }}
+                {{ form.guinness(class="form-check") }}
+                {% for error in form.guinness.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.smoking.label(class="form-label") }}
+                {{ form.smoking(class="form-check") }}
+                {% for error in form.smoking.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.music.label(class="form-label") }}
+                {{ form.music(class="form-control") }}
+                {% for error in form.music.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <!-- Repeat the above structure for other form fields -->
+            <div class="mb-3">
+                {{ form.body.label(class="form-label") }}
+                {{ form.body(class="form-control", rows="10") }}
+                {% for error in form.body.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {{ form.submit(class="btn btn-primary") }} 
+            
+        </form>
+        <br>
+        
+    
+
+{% endblock %}
