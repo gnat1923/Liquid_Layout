@@ -30,13 +30,17 @@ class User(UserMixin, db.Model):
 class Post(db.Model):
     id : so.Mapped[int] = so.mapped_column(primary_key=True)
     title : so.Mapped[str] = so.mapped_column(sa.String(64))
-    body : so.Mapped[str] = so.mapped_column(sa.String(1024))
+    body : so.Mapped[str] = so.mapped_column(sa.Text)
+    map_embed : so.Mapped[str] = so.mapped_column(sa.Text, nullable=True)
     transit : so.Mapped[str] = so.mapped_column(sa.String(64))
     neighbourhood : so.Mapped[str] = so.mapped_column(sa.String(64))
     beer_rating : so.Mapped[str] = so.mapped_column(sa.Integer)
-    guinness : so.Mapped[str] = so.mapped_column(sa.Boolean)
-    smoking : so.Mapped[str] = so.mapped_column(sa.Boolean)
+    guinness : so.Mapped[bool] = so.mapped_column(sa.Boolean)
+    smoking : so.Mapped[bool] = so.mapped_column(sa.Boolean)
     music : so.Mapped[str] = so.mapped_column(sa.String(128))
+    visible : so.Mapped[bool] = so.mapped_column(sa.Boolean, default=True, nullable=True)
+    image_data: so.Mapped[bytes] = so.mapped_column(sa.LargeBinary, nullable=True)  # Store image data
+    image_filename: so.Mapped[str] = so.mapped_column(sa.String(255), nullable=True)  # Store image filename
     timestamp : so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
     user_id : so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
 

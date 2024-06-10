@@ -62,7 +62,8 @@
         </p>
         <p> {{ form.submit() }} </p>
         </form>-->
-        <form action="" method="post" class="container">
+        <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+        <form action="" method="post">
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 {{ form.title.label(class="form-label") }}
@@ -124,6 +125,7 @@
             {{ form.submit(class="btn btn-primary") }} 
             
         </form>
+    </div>
         <br>
         
     

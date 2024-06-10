@@ -19,5 +19,5 @@ class PostForm(FlaskForm):
     guinness = BooleanField("Guinness")
     smoking = BooleanField("Smoking")
     music = StringField("Music")
-    body = TextAreaField("Body", validators=[DataRequired(), Length(min=1, max=1084)])
+    body = TextAreaField("Body", validators=[DataRequired()])
     submit = SubmitField("Submit")
