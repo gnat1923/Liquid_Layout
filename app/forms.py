@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from wtforms import StringField, FileField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, Optional
 import sqlalchemy as sa
 from app import db
 from app.models import User
@@ -19,5 +19,9 @@ class PostForm(FlaskForm):
     guinness = BooleanField("Guinness")
     smoking = BooleanField("Smoking")
     music = StringField("Music")
+    map_embed = StringField("Map Embed")
     body = TextAreaField("Body", validators=[DataRequired()])
+    image_data = FileField("Image Data", validators=[Optional()])
+    image_filename = StringField("Image name", validators=[Optional()])
+    visible = BooleanField("Visible", default="checked")
     submit = SubmitField("Submit")

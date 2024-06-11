@@ -38,15 +38,26 @@ def logout():
 def post():
     form = PostForm()
     if form.validate_on_submit():
+        file_data = None
+        if form.image_data.data:
+            file = form.image_data.data
+            if file.filename != "":
+                file_data = file.read()
+
+
         post = Post(title = form.title.data,
-                    body= form.body.data,
-                    transit = form.transit.data,
-                    neighbourhood = form.neighbourhood.data,
-                    beer_rating = form.beer_rating.data,
-                    guinness = form.guinness.data,
-                    smoking = form.smoking.data,
-                    music = form.music.data,
-                    author = current_user)
+                       body = form.body.data,
+                       map_embed = form.map_embed.data,
+                       transit = form.transit.data,
+                       neighbourhood = form.neighbourhood.data,
+                       beer_rating = form.beer_rating.data,
+                       guinness= form.guinness.data,
+                       smoking = form.smoking.data,
+                       music = form.music.data,
+                       visible = form.visible.data,
+                       image_data=file_data,
+                        image_filename=file.filename if file_data else None,
+                       author = current_user)
         db.session.add(post)
         db.session.commit()
         flash("Your post is now live!")
@@ -59,3 +70,40 @@ def posts(id):
     post = Post.query.get_or_404(id)
     title = post.title
     return render_template("posts.html", title=title, post=post)
+
+@app.route("/posts/edit/<id>", methods=["GET", "POST"])
+@login_required
+def edit_post(id):
+    
+    
+    post = Post.query.get_or_404(id)
+    form = PostForm(obj=post)
+    title = f"Edit post {post.title}"
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        post.map_embed = form.map_embed.data
+        post.transit = form.transit.data
+        post.neighbourhood = form.neighbourhood.data
+        post.beer_rating = form.beer_rating.data
+        post.guinness= form.guinness.data
+        post.smoking = form.smoking.data
+        post.music = form.music.data
+        post.visible = form.visible.data
+        
+        post.author = current_user
+
+        if form.image_data.data:
+            post.image_data = form.image_data.data.read()
+            post.image_filename = form.image_filename.data
+        else:
+            post.image_data = None
+            post.image_filename = None
+
+        db.session.commit()
+        flash("Post updated successfully!")
+        dynamic_url = url_for("posts", id=post.id)
+        return redirect(dynamic_url)
+    
+    return render_template("edit_post.html", title=title, post=post, form=form)
