@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% for post in posts %}
+<div class="container text-left custom-post">
+    <div class="row">
+        <div class="column">
+            <a href="{{url_for('posts', id=post.id)}}"><h1>{{ post.title }} - <b>{% if post.visible == True %}VISIBLE {% else %}NOT VISIBLE {% endif %} </h1></b></a><hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p>Pic placeholder</p>
+        </div>
+        <div class="col-md-4">
+            <p><b>Neighbourhood:</b> {{post.neighbourhood}}</p>
+        </div>
+        <div class="col-md-4">
+            <p><b>Transit:</b> {{post.transit}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p><b>Beer Rating:</b> {{post.beer_rating}} </p>
+        </div>
+        <div class="col-md-4">
+            {% if post.smoking == True %}
+                <p><b>Smoking?</b> Yes</p>
+            {% else %}
+                <p><b>Smoking?</b> Nope</p>
+            {% endif %}
+           <!--<p><b>Smoking?</b> {{post.smoking}} </p>-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <p><b>Music:</b> {{post.music}} </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            {% if post.guinness == True %}
+                <p><b>Guinness?</b> Yes</p>
+            {% else %}
+                <p><b>Guinness?</b> Nope</p>
+            {% endif %}
+            <!--<p><b>Guinness?</b> {{post.guinness}} </p>-->
+        </div>
+    </div><hr>
+    <div class="row">
+        <div class="column">
+            <p> {{post.body}} </p>
+        </div>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}

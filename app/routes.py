@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.forms import LoginForm, PostForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -9,13 +9,14 @@ from app.models import User, Post
 @app.route("/")
 @app.route("/index")
 def index():
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    posts = Post.query.filter_by(visible=True).order_by(Post.timestamp.desc()).all()
     
     return render_template("index.html", title="Liquid Layout Berlin", posts=posts)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     if current_user.is_authenticated:
+        flash("You are already logged in!")
         return redirect(url_for("index"))
     form = LoginForm()
     if form.validate_on_submit():
@@ -31,6 +32,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
+    flash("Log out successful")
     return redirect(url_for("index"))
 
 @app.route("/post", methods=["GET", "POST"])
@@ -69,7 +71,8 @@ def post():
 def posts(id):
     post = Post.query.get_or_404(id)
     title = post.title
-    return render_template("posts.html", title=title, post=post)
+    form = PostForm()
+    return render_template("posts.html", title=title, post=post, form=form)
 
 @app.route("/posts/edit/<id>", methods=["GET", "POST"])
 @login_required
@@ -107,3 +110,58 @@ def edit_post(id):
         return redirect(dynamic_url)
     
     return render_template("edit_post.html", title=title, post=post, form=form)
+
+@app.route('/toggle_visibility/<int:post_id>', methods=['POST'])
+@login_required
+def toggle_visibility(post_id):
+    post = Post.query.get_or_404(post_id)
+    
+    if post.author != current_user:
+        flash('You do not have permission to edit this post.', 'danger')
+        return redirect(url_for('edit_post', post_id=post_id))
+    post.visible = not post.visible
+    db.session.commit()
+    flash('Post visibility updated.', 'success')
+
+    return redirect(url_for('posts', id=post_id))
+
+@app.route("/delete_post/<id>", methods=["POST"])
+@login_required
+def delete_post(id):
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    flash("Post has been deleted", "success")
+    return redirect(url_for("index"))
+
+@app.route("/all_posts", methods=["GET"])
+@login_required
+def show_all_posts():
+    posts = Post.query.order_by(Post.timestamp.desc()).all()
+
+    return render_template("show_all_posts.html", posts=posts)
+
+@app.route("/filter_index", methods=["POST","GET"])
+def filter_index():
+    # Get filter values from the request
+    neighbourhood = request.args.get('neighbourhood')
+    smoking = request.args.get('smoking')
+    guinness = request.args.get('guinness')
+
+    # Start with all posts
+    posts_query = Post.query
+
+    # Apply filters
+    if neighbourhood:
+        posts_query = posts_query.filter(Post.neighbourhood == neighbourhood)
+    if smoking:
+        smoking_bool = smoking.lower() == 'true'
+        posts_query = posts_query.filter(Post.smoking == smoking_bool)
+    if guinness:
+        guinness_bool = guinness.lower() == 'true'
+        posts_query = posts_query.filter(Post.guinness == guinness_bool)
+
+    # Get the filtered posts
+    posts = posts_query.order_by(Post.timestamp.desc()).all()
+
+    return render_template('filter_index.html', posts=posts)

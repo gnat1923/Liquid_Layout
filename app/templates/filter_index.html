@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+                <div class="list-group">
+                    <h4>Filter Posts</h4>
+                    <form method="get" action="{{ url_for('filter_index') }}">
+                        <!-- Neighbourhood Filter -->
+                        <div class="form-group">
+                            <label for="neighbourhood">Neighbourhood</label>
+                            <select class="form-control" id="neighbourhood" name="neighbourhood">
+                                <option value="">All</option>
+                                <!-- Add more options as needed -->
+                                <option value="Wedding">Wedding</option>
+                                <option value="Mitte">Mitte</option>
+                            </select>
+                        </div>
+
+                        <!-- Smoking Filter -->
+                        <div class="form-group">
+                            <label for="smoking">Smoking</label>
+                            <select class="form-control" id="smoking" name="smoking">
+                                <option value="">All</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+
+                        <!-- Guinness Filter -->
+                        <div class="form-group">
+                            <label for="guinness">Guinness</label>
+                            <select class="form-control" id="guinness" name="guinness">
+                                <option value="">All</option>
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark mt-3">Apply Filters</button>
+                    </form>
+                </div>
+            </div>
+
+            
+
+            <!-- Main Content -->
+            <div class="col-md-9 offset-md-1">
+                <!-- Display filtered posts here -->
+                {% for post in posts %}
+                <div class="custom-post">
+                    <div class="row">
+                      <div class="col">
+                        <h1><a href="{{ url_for('posts', id=post.id) }}" class="a-custom">{{ post.title }}</a></h1><hr>
+                      </div>
+                      <div class="row">
+                        <div class="column">
+                            <p><b>Neighbourhood:</b> {{ post.neighbourhood }} </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="column">
+                            <p><b>Beer rating:</b> {{ post.beer_rating }} </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="column">
+                            <p><b>Smoking?</b> {{ post.smoking }} </p><hr>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="column">
+                            <p>{{ post.body[:100] }}{% if post.body|length > 100 %}...{% endif %}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -150,7 +150,8 @@
                 <div class="text-danger">{{ error }}</div>
                 {% endfor %}
             </div>
-            {{ form.submit(class="btn btn-primary") }} 
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{url_for('index')}}" class="btn btn-secondary" onclick="return confirm('Are you sure you want to cancel?');">Cancel</a> 
             
         </form>
     </div>

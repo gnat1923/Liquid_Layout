@@ -4,13 +4,14 @@ body {
     flex-direction: column;
     min-height: 100vh;
     font-family: "Monaco", monospace;
+    
 }
 
 .custom-post {
     background-color: black;
     color: white;
     border-radius: 15px;
-    max-width: 50%;
+    max-width: 75%;
     padding: 20px;
     margin-bottom: 15px;
 }
@@ -28,6 +29,15 @@ footer {
     
 }
 
+.list-group {
+    margin-top: 20px;
+}
+
+.container-fluid .row > .col-md-8 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .a-custom:hover {
     color: #ece1d4; /* Default Bootstrap link color */
     text-decoration: underline; /* Remove underline */
@@ -39,4 +49,5 @@ footer {
     border-radius: 15px;
     padding: 15px;
     margin: 10px auto;
+    max-width: 60%;
 }
