@@ -5,6 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from app import db
 from app.models import User, Post
+import base64
 
 '''@app.route("/")
 @app.route("/index")
@@ -72,7 +73,12 @@ def posts(id):
     post = Post.query.get_or_404(id)
     title = post.title
     form = PostForm()
-    return render_template("posts.html", title=title, post=post, form=form)
+    if post.image_data:
+        image_data = base64.b64encode(post.image_data).decode('utf-8')
+    else:
+        image_data = None
+
+    return render_template("posts.html", title=title, post=post, form=form, image_data=image_data)
 
 @app.route("/posts/edit/<id>", methods=["GET", "POST"])
 @login_required
@@ -162,6 +168,12 @@ def index():
         posts_query = posts_query.filter(Post.guinness == guinness_bool)
 
     # Get the filtered posts
-    posts = posts_query.order_by(Post.timestamp.desc()).all()
+    page = request.args.get('page', 1, type=int)
+    posts_query = Post.query.order_by(Post.timestamp.desc())
+    pagination = posts_query.paginate(page=page, per_page=app.config["POSTS_PER_PAGE"], error_out=False)
+    posts = pagination.items
 
-    return render_template('filter_index.html', posts=posts, neighbourhoods_list=neighbourhoods_list)
+    if guinness == "false":
+        flash("Why did you select no Guinness, sicko?")
+
+    return render_template('index.html', posts=posts, pagination=pagination, neighbourhoods_list=neighbourhoods_list)

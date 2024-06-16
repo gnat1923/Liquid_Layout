@@ -53,3 +53,8 @@ footer {
     margin: 10px auto;
     max-width: 60%;
 }
+
+.post-img {
+    max-width: 64px; /* Ensures image does not exceed its container's width */
+    height: auto; /* Maintains aspect ratio */
+}

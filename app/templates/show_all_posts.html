@@ -5,7 +5,8 @@
 <div class="container text-left custom-post">
     <div class="row">
         <div class="column">
-            <a href="{{url_for('posts', id=post.id)}}"><h1>{{ post.title }} - <b>{% if post.visible == True %}VISIBLE {% else %}NOT VISIBLE {% endif %} </h1></b></a><hr>
+            <a href="{{url_for('posts', id=post.id)}}"><h1>{{ post.title }} - <b>{% if post.visible == True %}VISIBLE {% else %}NOT VISIBLE {% endif %} </h1></b></a><br>
+            <p>{{post.timestamp}}</p><hr>
         </div>
     </div>
     <div class="row">
