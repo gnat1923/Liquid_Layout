@@ -1,17 +1,17 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, PostForm
+from app.forms import LoginForm, PostForm, neighbourhoods_list, transit_list
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from app import db
 from app.models import User, Post
 
-@app.route("/")
+'''@app.route("/")
 @app.route("/index")
 def index():
     posts = Post.query.filter_by(visible=True).order_by(Post.timestamp.desc()).all()
     
-    return render_template("index.html", title="Liquid Layout Berlin", posts=posts)
+    return render_template("index.html", title="Liquid Layout Berlin", posts=posts)'''
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
@@ -141,8 +141,8 @@ def show_all_posts():
 
     return render_template("show_all_posts.html", posts=posts)
 
-@app.route("/filter_index", methods=["POST","GET"])
-def filter_index():
+@app.route("/index", methods=["POST","GET"])
+def index():
     # Get filter values from the request
     neighbourhood = request.args.get('neighbourhood')
     smoking = request.args.get('smoking')
@@ -164,4 +164,4 @@ def filter_index():
     # Get the filtered posts
     posts = posts_query.order_by(Post.timestamp.desc()).all()
 
-    return render_template('filter_index.html', posts=posts)
+    return render_template('filter_index.html', posts=posts, neighbourhoods_list=neighbourhoods_list)

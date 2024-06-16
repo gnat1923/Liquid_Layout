@@ -17,10 +17,12 @@ body {
 }
 
 footer {
-    margin-top: auto;
+    margin: auto;
     border-top: 3px solid black;
     background-color: #ece1d4;
     padding: 10px;
+    width: 100%;
+    text-align: center;
 }
 
 .a-custom {
